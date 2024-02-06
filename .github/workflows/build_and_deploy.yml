@@ -13,18 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build static site
-        run: npx @11ty/eleventy
-
       - name: Install Python package modal
         run: pip install modal
 
       - name: Set the modal token id and secret
         run: modal token set --token-id ${{ secrets.MODAL_TOKEN_ID }} --token-secret ${{ secrets.MODAL_TOKEN_SECRET }}
 
-      - name: Deploy to modal app
+      - name: Rebuild _site
+        run: modal run modal_build.py
+        
+      - name: Deploy to modal
         run: |
           modal deploy main.py
