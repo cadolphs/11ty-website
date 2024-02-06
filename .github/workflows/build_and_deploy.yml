@@ -19,6 +19,9 @@ jobs:
       - name: Build static site
         run: npx @11ty/eleventy
 
+      - name: Install Python package modal
+        run: pip install modal
+
       - name: Deploy to modal app
         run: |
           modal deploy main.py
